@@ -28,15 +28,17 @@ private:
 
     std::unordered_set<char> symbols { '.', '=', ',', ';', '#', '<', '>', '+', '-', '*', '/', '(', ')'};
 
-    int value;
-    std::string sym;
+    std::string value;
+
+    void set_value(const std::string& v);
+    char get_ident(std::string::iterator& it);
+    char get_num(std::string::iterator& it);
+    void error(const std::string& msg);
 
 public:
 
-    char nex_tok();
-
-
-
+    char nex_tok(std::string::iterator& it);
+    std::string get_value();
 
 };
 
