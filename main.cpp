@@ -23,6 +23,6 @@ std::string load_file(char* path) {
 int main(int argc, char* argv[]) {
 
     std::string file_string = load_file(argv[1]);
-    
+
     return 0;
 }
