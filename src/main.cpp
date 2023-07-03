@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include "lexer.h"
+#include "parser.h"
 
 std::string load_file(char* path) {
     std::string file_string;
@@ -29,14 +29,10 @@ int main(int argc, char* argv[]) {
     }
 
     std::string file_string = load_file(argv[1]);
-    Lexer l;
-
-    Token t;
     std::string::iterator it = file_string.begin();
-    while ((t = l.next_token(it))) {
 
-        std::cout << (char)t << std::endl;
-    }
+    Parser p(it);
+    p.parse();
 
     return 0;
 }

@@ -25,6 +25,7 @@ private:
     std::unordered_set<char> symbols { '.', '=', ',', ';', '#', '<', '>', '+', '-', '*', '/', '(', ')'};
 
     std::string value;
+    int line = 1;
 
     void set_value(const std::string& v);
     Token get_ident(std::string::iterator& it);
@@ -35,6 +36,7 @@ public:
 
     Token next_token(std::string::iterator& it);
     std::string get_value();
+    int get_line_number() const { return line; }
 
 };
 

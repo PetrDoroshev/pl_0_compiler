@@ -14,6 +14,9 @@ Token Lexer::next_token(std::string::iterator &it) {
     while (token_type == TOK_EOF) {
 
         if (*it == ' ' || *it == '\t' || *it == '\n'){
+            if (*it == '\n')
+                line++;
+
             it++;
         }
         else if (symbols.find(*it) != symbols.end()) {
