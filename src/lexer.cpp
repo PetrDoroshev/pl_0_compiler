@@ -1,7 +1,3 @@
-//
-// Created by doros on 01.07.2023.
-//
-
 #include "lexer.h"
 #include <cctype>
 #include <iostream>
@@ -10,52 +6,52 @@ void Lexer::set_value(const std::string &v) {
     value = v;
 }
 
-char Lexer::nex_tok(std::string::iterator &it) {
+Token Lexer::next_token(std::string::iterator &it) {
 
-    char token = '\0';
+    Token token_type = TOK_EOF;
+    set_value("");
 
-    while (token == '\0') {
+    while (token_type == TOK_EOF) {
 
         if (*it == ' ' || *it == '\t' || *it == '\n'){
             it++;
         }
         else if (symbols.find(*it) != symbols.end()) {
-            token = *it;
+            token_type = (Token)*it;
             it++;
         }
         else if (*it == ':') {
             if (*(++it) == '=') {
-                token = TOK_ASSIGN;
+                token_type = TOK_ASSIGN;
             }
             it++;
         }
         else if (std::isalpha(*it) || *it == '_') {
-            token = get_ident(it);
+            token_type = get_ident(it);
         }
         else if (std::isdigit(*it)) {
-            token = get_num(it);
+            token_type = get_num(it);
         }
         else if (*it == '\0'){
-            return 0;
+            return TOK_EOF;
         }
         else {
-            error("Unknown character");
+            error("Unknown character: " + std::string(1, *it));
         }
 
     }
 
-    return token;
+    return token_type;
 }
 
-char Lexer::get_ident(std::string::iterator &it) {
+Token Lexer::get_ident(std::string::iterator &it) {
 
     std::string ident;
 
-    while (std::isalpha(*it)) {
-        ident = ident.append(1, *it);
+    while (std::isalpha(*it) || *it == '_') {
+        ident = ident.append(1, (char)std::tolower(*it));
         it++;
     }
-
     if (key_words.find(ident) != key_words.end()) {
         return key_words[ident];
     }
@@ -64,7 +60,7 @@ char Lexer::get_ident(std::string::iterator &it) {
     return TOK_IDENT;
 }
 
-char Lexer::get_num(std::string::iterator &it) {
+Token Lexer::get_num(std::string::iterator &it) {
 
     std::string num;
 
@@ -72,10 +68,8 @@ char Lexer::get_num(std::string::iterator &it) {
         num = num.append(1, *it);
         it++;
     }
-
     set_value(num);
     return TOK_NUMBER;
-
 }
 
 std::string Lexer::get_value() {

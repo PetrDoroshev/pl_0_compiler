@@ -23,12 +23,17 @@ std::string load_file(char* path) {
 
 int main(int argc, char* argv[]) {
 
+    if (argc < 2) {
+        std::cout << "Input file is not specified";
+        exit(1);
+    }
+
     std::string file_string = load_file(argv[1]);
     Lexer l;
 
-    char t;
+    Token t;
     std::string::iterator it = file_string.begin();
-    while ((t = l.nex_tok(it))) {
+    while ((t = l.next_token(it))) {
 
         std::cout << (char)t << std::endl;
     }
