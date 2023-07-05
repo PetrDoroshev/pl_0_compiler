@@ -20,15 +20,6 @@ private:
 
     static void error(const std::string& msg);
 
-public:
-
-    void parse();
-
-    Parser(std::string::iterator& it) {
-        string_iter = it;
-
-    }
-
     void block();
 
     void statement();
@@ -40,6 +31,16 @@ public:
     void term();
 
     void factor();
+
+public:
+
+    void parse();
+
+    Parser(std::string::iterator& it) {
+        string_iter = it;
+        current_token = TOK_EOF;
+
+    }
 };
 
 

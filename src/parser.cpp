@@ -9,8 +9,7 @@ void Parser::expect(Token expected_token) {
 
     if (current_token != expected_token) {
 
-        std::cout << lexer.get_line_number() << std::endl;
-        error("");
+        error("invalid syntax, line: " + std::to_string(lexer.get_line_number()));
     }
 
     get_next_token();
@@ -166,7 +165,6 @@ void Parser::factor() {
 
 
 }
-
 
 void Parser::parse() {
 
