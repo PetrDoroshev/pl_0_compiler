@@ -24,12 +24,21 @@ void Parser::block() {
 
     if (current_token == TOK_CONST) {
         expect(TOK_CONST);
+
+        if (current_token == TOK_IDENT) {
+            sym_tab.add_symbol(TOK_CONST, lexer.get_value(), depth);
+        }
         expect(TOK_IDENT);
         expect(TOK_EQUAL);
         expect(TOK_NUMBER);
 
         while (current_token == TOK_COMMA) {
             expect(TOK_COMMA);
+
+            if (current_token == TOK_IDENT){
+                sym_tab.add_symbol(TOK_CONST, lexer.get_value(), depth);
+            }
+
             expect(TOK_IDENT);
             expect(TOK_EQUAL);
             expect(TOK_NUMBER);
@@ -40,9 +49,19 @@ void Parser::block() {
     if (current_token == TOK_VAR) {
 
         expect(TOK_VAR);
+
+        if (current_token == TOK_IDENT) {
+            sym_tab.add_symbol(TOK_VAR, lexer.get_value(), depth);
+        }
+
         expect(TOK_IDENT);
         while (current_token == TOK_COMMA) {
             expect(TOK_COMMA);
+
+            if (current_token == TOK_IDENT) {
+                sym_tab.add_symbol(TOK_VAR, lexer.get_value(), depth);
+            }
+
             expect(TOK_IDENT);
         }
         expect(TOK_SEMICOLON);
@@ -50,10 +69,17 @@ void Parser::block() {
 
     while (current_token == TOK_PROCEDURE) {
         expect(TOK_PROCEDURE);
+
+        if (current_token == TOK_IDENT) {
+            sym_tab.add_symbol(TOK_PROCEDURE, lexer.get_value(), depth);
+        }
+
         expect(TOK_IDENT);
         expect(TOK_SEMICOLON);
         block();
         expect(TOK_SEMICOLON);
+
+        sym_tab.destroy_symbols();
     }
 
     statement();
@@ -163,7 +189,6 @@ void Parser::factor() {
         expect(TOK_RPAREN);
     }
 
-
 }
 
 void Parser::parse() {
@@ -171,7 +196,6 @@ void Parser::parse() {
     get_next_token();
     block();
     expect(TOK_DOT);
-
 }
 
 void Parser::error(const std::string &msg) {

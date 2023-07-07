@@ -1,6 +1,4 @@
 #include "lexer.h"
-#include <cctype>
-#include <iostream>
 
 void Lexer::set_value(const std::string &v) {
     value = v;
@@ -13,7 +11,7 @@ Token Lexer::next_token(std::string::iterator &it) {
 
     while (token_type == TOK_EOF) {
 
-        if (*it == ' ' || *it == '\t' || *it == '\n'){
+        if (*it == ' ' || *it == '\t' || *it == '\n') {
             if (*it == '\n')
                 line++;
 
@@ -35,7 +33,7 @@ Token Lexer::next_token(std::string::iterator &it) {
         else if (std::isdigit(*it)) {
             token_type = get_num(it);
         }
-        else if (*it == '\0'){
+        else if (*it == '\0') {
             return TOK_EOF;
         }
         else {
@@ -75,7 +73,7 @@ Token Lexer::get_num(std::string::iterator &it) {
     return TOK_NUMBER;
 }
 
-std::string Lexer::get_value() {
+std::string Lexer::get_value() const {
     return value;
 }
 

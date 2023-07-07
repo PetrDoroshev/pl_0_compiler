@@ -4,12 +4,14 @@
 #include <iostream>
 #include "lexer.h"
 #include "token.h"
+#include "sym_tab.h"
 
 class Parser {
 
 private:
 
     Lexer lexer;
+    SymTab sym_tab;
     Token current_token;
     std::string::iterator string_iter;
     int depth = 0;

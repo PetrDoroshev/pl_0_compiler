@@ -1,1 +1,15 @@
+const a = 1;
+procedure b;
+    var a;
+    procedure c;
+        var d;
+        begin
+        end;
+begin
+
+    while a > 4 do
+    begin
+    end
+
+end;
 .

@@ -1,10 +1,12 @@
 #ifndef PL_0_COMPILER_LEXER_H
 #define PL_0_COMPILER_LEXER_H
 
-#include "token.h"
 #include <unordered_map>
 #include <unordered_set>
 #include <string>
+#include <cctype>
+#include <iostream>
+#include "token.h"
 
 class Lexer {
 
@@ -35,7 +37,7 @@ private:
 public:
 
     Token next_token(std::string::iterator& it);
-    std::string get_value();
+    std::string get_value() const;
     int get_line_number() const { return line; }
 
 };
